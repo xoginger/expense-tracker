@@ -37,11 +37,11 @@ struct DocumentScanner: UIViewControllerRepresentable {
         }
 
         func documentCameraViewControllerDidCancel(_ controller: VNDocumentCameraViewController) {
-            controller.dismiss(animated: true, onCancel)
+            controller.dismiss(animated: true, completion: onCancel)
         }
 
         func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFailWithError error: Error) {
-            controller.dismiss(animated: true, onCancel)
+            controller.dismiss(animated: true, completion: onCancel)
         }
     }
 }
