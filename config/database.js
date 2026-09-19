@@ -1,15 +1,16 @@
 const Database = require('better-sqlite3');
 const path = require('path');
 
-const dbPath = process.env.DB_PATH || './database.sqlite';
-const db = new Database(dbPath);
+function addColumnIfMissing(db, table, column, definition) {
+    const cols = db.pragma(`table_info(${table})`);
+    if (!cols.some((c) => c.name === column)) {
+        db.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${definition}`);
+    }
+}
 
-// Habilitar foreign keys
-db.pragma('foreign_keys = ON');
+function initializeDatabase(db) {
+    db.pragma('foreign_keys = ON');
 
-// Crear tablas
-function initializeDatabase() {
-    // Tabla de usuarios (simplificada para primera versión)
     db.exec(`
     CREATE TABLE IF NOT EXISTS users (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -19,7 +20,7 @@ function initializeDatabase() {
     )
   `);
 
-    // Tabla de eventos/proyectos
+    // events evoluciona a rutas de viaje (misma tabla, campos extra)
     db.exec(`
     CREATE TABLE IF NOT EXISTS events (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -27,13 +28,17 @@ function initializeDatabase() {
       description TEXT,
       start_date DATE,
       end_date DATE,
-      status TEXT DEFAULT 'active',
+      status TEXT DEFAULT 'abierta',
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
   `);
 
-    // Tabla de categorías
+    addColumnIfMissing(db, 'events', 'origin', 'TEXT');
+    addColumnIfMissing(db, 'events', 'destination', 'TEXT');
+    addColumnIfMissing(db, 'events', 'slug', 'TEXT');
+    addColumnIfMissing(db, 'events', 'notes', 'TEXT');
+
     db.exec(`
     CREATE TABLE IF NOT EXISTS categories (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -44,7 +49,6 @@ function initializeDatabase() {
     )
   `);
 
-    // Tabla de gastos
     db.exec(`
     CREATE TABLE IF NOT EXISTS expenses (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -64,7 +68,14 @@ function initializeDatabase() {
     )
   `);
 
-    // Tabla de perfiles de facturación del usuario
+    addColumnIfMissing(db, 'expenses', 'ticket_code', 'TEXT');
+    addColumnIfMissing(db, 'expenses', 'metadata_path', 'TEXT');
+    addColumnIfMissing(db, 'expenses', 'uso_cfdi', 'TEXT');
+    addColumnIfMissing(db, 'expenses', 'forma_pago', 'TEXT');
+    addColumnIfMissing(db, 'expenses', 'iva', 'REAL');
+    addColumnIfMissing(db, 'expenses', 'deducible', 'INTEGER DEFAULT 0');
+    addColumnIfMissing(db, 'expenses', 'confianza_categoria', 'REAL');
+
     db.exec(`
     CREATE TABLE IF NOT EXISTS billing_profiles (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -81,7 +92,6 @@ function initializeDatabase() {
     )
   `);
 
-    // Tabla de datos de facturación extraídos de tickets
     db.exec(`
     CREATE TABLE IF NOT EXISTS ticket_billing_data (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -97,28 +107,88 @@ function initializeDatabase() {
     )
   `);
 
-    // Insertar categorías predeterminadas
+    db.exec(`
+    CREATE TABLE IF NOT EXISTS invoice_jobs (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      expense_id INTEGER,
+      playbook_id TEXT,
+      metodo TEXT,
+      portal_url TEXT,
+      folio TEXT,
+      estado TEXT DEFAULT 'pendiente',
+      cfdi_uuid TEXT,
+      dictamen_json TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (expense_id) REFERENCES expenses(id) ON DELETE CASCADE
+    )
+  `);
+
+    db.exec(`
+    CREATE TABLE IF NOT EXISTS cfdi_documents (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      expense_id INTEGER,
+      invoice_job_id INTEGER,
+      uuid TEXT,
+      rfc_emisor TEXT,
+      rfc_receptor TEXT,
+      total REAL,
+      fecha TEXT,
+      xml_path TEXT,
+      pdf_path TEXT,
+      metadata_path TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (expense_id) REFERENCES expenses(id) ON DELETE SET NULL,
+      FOREIGN KEY (invoice_job_id) REFERENCES invoice_jobs(id) ON DELETE SET NULL
+    )
+  `);
+
     const insertCategory = db.prepare(`
     INSERT OR IGNORE INTO categories (name, icon, color, keywords) VALUES (?, ?, ?, ?)
   `);
 
     const defaultCategories = [
         ['Alimentación', '🍽️', '#FF6B6B', 'restaurante,comida,alimentos,oxxo,tienda,super'],
-        ['Transporte', '🚗', '#4ECDC4', 'gasolina,uber,taxi,peaje,caseta,autobus'],
+        ['Transporte', '🚗', '#4ECDC4', 'gasolina,pemex,uber,taxi,peaje,caseta,autobus'],
         ['Hospedaje', '🏨', '#95E1D3', 'hotel,motel,airbnb,hospedaje'],
         ['Servicios', '🔧', '#FFE66D', 'reparacion,servicio,mantenimiento'],
         ['Compras', '🛍️', '#A8E6CF', 'compra,tienda,mercado'],
         ['Entretenimiento', '🎭', '#FFB6C1', 'cine,diversión,museo,parque'],
-        ['Salud', '⚕️', '#B4E7CE', 'farmacia,medico,clinica'],
+        ['Salud', '⚕️', '#B4E7CE', 'farmacia,guadalajara,medico,clinica'],
         ['Otros', '📦', '#C7CEEA', 'varios,otros']
     ];
 
-    defaultCategories.forEach(cat => insertCategory.run(...cat));
-
-    console.log('✅ Base de datos inicializada correctamente');
+    defaultCategories.forEach((cat) => insertCategory.run(...cat));
 }
 
-// Inicializar al importar
-initializeDatabase();
+let db;
 
-module.exports = db;
+function getDb() {
+    if (!db) {
+        const dbPath = process.env.DB_PATH || path.join(__dirname, '..', 'database.sqlite');
+        db = new Database(dbPath);
+        initializeDatabase(db);
+    }
+    return db;
+}
+
+function resetDbForTests() {
+    if (db) {
+        db.close();
+        db = null;
+    }
+}
+
+module.exports = new Proxy(
+    { getDb, resetDbForTests, initializeDatabase },
+    {
+        get(target, prop) {
+            if (prop in target) {
+                return target[prop];
+            }
+            const instance = getDb();
+            const value = instance[prop];
+            return typeof value === 'function' ? value.bind(instance) : value;
+        }
+    }
+);

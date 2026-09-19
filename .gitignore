@@ -5,5 +5,12 @@ uploads/*.jpg
 uploads/*.png
 uploads/*.jpeg
 !uploads/.gitkeep
+data/scanFacturas/Tickets/
+data/scanFacturas/Facturas/
+data/scanFacturas/Reportes/
+data/scanFacturas/_incoming/
+*.sqlite
 *.log
 .DS_Store
+.xcuserstate
+xcuserdata/

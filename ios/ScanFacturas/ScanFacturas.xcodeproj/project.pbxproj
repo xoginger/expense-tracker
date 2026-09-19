@@ -1,0 +1,481 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8A0100000000000000000142 /* ScanFacturasApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0100000000000000000141 /* ScanFacturasApp.swift */; };
+		8A0100000000000000000144 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0100000000000000000143 /* AppState.swift */; };
+		8A0100000000000000000146 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0100000000000000000145 /* Models.swift */; };
+		8A0100000000000000000148 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0100000000000000000147 /* APIClient.swift */; };
+		8A0100000000000000000150 /* FolderStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0100000000000000000149 /* FolderStore.swift */; };
+		8A0100000000000000000152 /* VisionOCR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0100000000000000000151 /* VisionOCR.swift */; };
+		8A0100000000000000000154 /* DocumentScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0100000000000000000153 /* DocumentScanner.swift */; };
+		8A0100000000000000000156 /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0100000000000000000155 /* RootTabView.swift */; };
+		8A0100000000000000000158 /* RutaListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0100000000000000000157 /* RutaListView.swift */; };
+		8A0100000000000000000160 /* CreateRutaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0100000000000000000159 /* CreateRutaView.swift */; };
+		8A0100000000000000000162 /* RutaDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0100000000000000000161 /* RutaDetailView.swift */; };
+		8A0100000000000000000164 /* TicketReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0100000000000000000163 /* TicketReviewView.swift */; };
+		8A0100000000000000000166 /* BillingQueueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0100000000000000000165 /* BillingQueueView.swift */; };
+		8A0100000000000000000168 /* FiscalProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0100000000000000000167 /* FiscalProfileView.swift */; };
+		8A0100000000000000000170 /* TotalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0100000000000000000169 /* TotalsView.swift */; };
+		8A0100000000000000000139 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A0100000000000000000138 /* ShareViewController.swift */; };
+		8A0100000000000000000133 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A0100000000000000000132 /* Assets.xcassets */; };
+		8A0100000000000000000129 /* VisionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A0100000000000000000128 /* VisionKit.framework */; };
+		8A0100000000000000000131 /* Vision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A0100000000000000000130 /* Vision.framework */; };
+		8A0100000000000000000140 /* ShareToScanFacturas.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8A0100000000000000000104 /* ShareToScanFacturas.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8A0100000000000000000126 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8A0100000000000000000100 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8A0100000000000000000102;
+			remoteInfo = ShareToScanFacturas;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8A0100000000000000000113 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				8A0100000000000000000140 /* ShareToScanFacturas.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		8A0100000000000000000103 /* ScanFacturas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScanFacturas.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A0100000000000000000104 /* ShareToScanFacturas.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareToScanFacturas.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A0100000000000000000141 /* ScanFacturasApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanFacturasApp.swift; sourceTree = "<group>"; };
+		8A0100000000000000000143 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		8A0100000000000000000145 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		8A0100000000000000000147 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		8A0100000000000000000149 /* FolderStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderStore.swift; sourceTree = "<group>"; };
+		8A0100000000000000000151 /* VisionOCR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionOCR.swift; sourceTree = "<group>"; };
+		8A0100000000000000000153 /* DocumentScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentScanner.swift; sourceTree = "<group>"; };
+		8A0100000000000000000155 /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
+		8A0100000000000000000157 /* RutaListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RutaListView.swift; sourceTree = "<group>"; };
+		8A0100000000000000000159 /* CreateRutaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRutaView.swift; sourceTree = "<group>"; };
+		8A0100000000000000000161 /* RutaDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RutaDetailView.swift; sourceTree = "<group>"; };
+		8A0100000000000000000163 /* TicketReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketReviewView.swift; sourceTree = "<group>"; };
+		8A0100000000000000000165 /* BillingQueueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BillingQueueView.swift; sourceTree = "<group>"; };
+		8A0100000000000000000167 /* FiscalProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiscalProfileView.swift; sourceTree = "<group>"; };
+		8A0100000000000000000169 /* TotalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalsView.swift; sourceTree = "<group>"; };
+		8A0100000000000000000132 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8A0100000000000000000134 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8A0100000000000000000135 /* ScanFacturas.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ScanFacturas.entitlements; sourceTree = "<group>"; };
+		8A0100000000000000000138 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		8A0100000000000000000136 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8A0100000000000000000137 /* ShareToScanFacturas.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareToScanFacturas.entitlements; sourceTree = "<group>"; };
+		8A0100000000000000000128 /* VisionKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VisionKit.framework; path = System/Library/Frameworks/VisionKit.framework; sourceTree = SDKROOT; };
+		8A0100000000000000000130 /* Vision.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vision.framework; path = System/Library/Frameworks/Vision.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8A0100000000000000000112 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A0100000000000000000129 /* VisionKit.framework in Frameworks */,
+				8A0100000000000000000131 /* Vision.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8A0100000000000000000116 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8A0100000000000000000105 = {
+			isa = PBXGroup;
+			children = (
+				8A0100000000000000000107 /* ScanFacturas */,
+				8A0100000000000000000108 /* ShareToScanFacturas */,
+				8A0100000000000000000109 /* Frameworks */,
+				8A0100000000000000000106 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8A0100000000000000000106 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8A0100000000000000000103 /* ScanFacturas.app */,
+				8A0100000000000000000104 /* ShareToScanFacturas.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8A0100000000000000000107 /* ScanFacturas */ = {
+			isa = PBXGroup;
+			children = (
+				8A0100000000000000000141 /* ScanFacturasApp.swift */,
+				8A0100000000000000000143 /* AppState.swift */,
+				8A0100000000000000000145 /* Models.swift */,
+				8A0100000000000000000147 /* APIClient.swift */,
+				8A0100000000000000000149 /* FolderStore.swift */,
+				8A0100000000000000000151 /* VisionOCR.swift */,
+				8A0100000000000000000153 /* DocumentScanner.swift */,
+				8A0100000000000000000155 /* RootTabView.swift */,
+				8A0100000000000000000157 /* RutaListView.swift */,
+				8A0100000000000000000159 /* CreateRutaView.swift */,
+				8A0100000000000000000161 /* RutaDetailView.swift */,
+				8A0100000000000000000163 /* TicketReviewView.swift */,
+				8A0100000000000000000165 /* BillingQueueView.swift */,
+				8A0100000000000000000167 /* FiscalProfileView.swift */,
+				8A0100000000000000000169 /* TotalsView.swift */,
+				8A0100000000000000000132 /* Assets.xcassets */,
+				8A0100000000000000000134 /* Info.plist */,
+				8A0100000000000000000135 /* ScanFacturas.entitlements */,
+			);
+			path = ScanFacturas;
+			sourceTree = "<group>";
+		};
+		8A0100000000000000000108 /* ShareToScanFacturas */ = {
+			isa = PBXGroup;
+			children = (
+				8A0100000000000000000138 /* ShareViewController.swift */,
+				8A0100000000000000000136 /* Info.plist */,
+				8A0100000000000000000137 /* ShareToScanFacturas.entitlements */,
+			);
+			path = ShareToScanFacturas;
+			sourceTree = "<group>";
+		};
+		8A0100000000000000000109 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8A0100000000000000000128 /* VisionKit.framework */,
+				8A0100000000000000000130 /* Vision.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8A0100000000000000000101 /* ScanFacturas */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8A0100000000000000000117 /* Build configuration list for PBXNativeTarget "ScanFacturas" */;
+			buildPhases = (
+				8A0100000000000000000110 /* Sources */,
+				8A0100000000000000000112 /* Frameworks */,
+				8A0100000000000000000111 /* Resources */,
+				8A0100000000000000000113 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8A0100000000000000000127 /* PBXTargetDependency */,
+			);
+			name = ScanFacturas;
+			productName = ScanFacturas;
+			productReference = 8A0100000000000000000103 /* ScanFacturas.app */;
+			productType = "com.apple.product-type.application";
+		};
+		8A0100000000000000000102 /* ShareToScanFacturas */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8A0100000000000000000118 /* Build configuration list for PBXNativeTarget "ShareToScanFacturas" */;
+			buildPhases = (
+				8A0100000000000000000114 /* Sources */,
+				8A0100000000000000000116 /* Frameworks */,
+				8A0100000000000000000115 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ShareToScanFacturas;
+			productName = ShareToScanFacturas;
+			productReference = 8A0100000000000000000104 /* ShareToScanFacturas.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8A0100000000000000000100 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					8A0100000000000000000101 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					8A0100000000000000000102 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = 8A0100000000000000000119 /* Build configuration list for PBXProject "ScanFacturas" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = es;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				es,
+				Base,
+			);
+			mainGroup = 8A0100000000000000000105;
+			productRefGroup = 8A0100000000000000000106 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8A0100000000000000000101 /* ScanFacturas */,
+				8A0100000000000000000102 /* ShareToScanFacturas */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8A0100000000000000000111 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A0100000000000000000133 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8A0100000000000000000115 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8A0100000000000000000110 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A0100000000000000000142 /* ScanFacturasApp.swift in Sources */,
+				8A0100000000000000000144 /* AppState.swift in Sources */,
+				8A0100000000000000000146 /* Models.swift in Sources */,
+				8A0100000000000000000148 /* APIClient.swift in Sources */,
+				8A0100000000000000000150 /* FolderStore.swift in Sources */,
+				8A0100000000000000000152 /* VisionOCR.swift in Sources */,
+				8A0100000000000000000154 /* DocumentScanner.swift in Sources */,
+				8A0100000000000000000156 /* RootTabView.swift in Sources */,
+				8A0100000000000000000158 /* RutaListView.swift in Sources */,
+				8A0100000000000000000160 /* CreateRutaView.swift in Sources */,
+				8A0100000000000000000162 /* RutaDetailView.swift in Sources */,
+				8A0100000000000000000164 /* TicketReviewView.swift in Sources */,
+				8A0100000000000000000166 /* BillingQueueView.swift in Sources */,
+				8A0100000000000000000168 /* FiscalProfileView.swift in Sources */,
+				8A0100000000000000000170 /* TotalsView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8A0100000000000000000114 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A0100000000000000000139 /* ShareViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8A0100000000000000000127 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8A0100000000000000000102 /* ShareToScanFacturas */;
+			targetProxy = 8A0100000000000000000126 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		8A0100000000000000000124 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		8A0100000000000000000125 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		8A0100000000000000000120 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ScanFacturas/ScanFacturas.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ScanFacturas/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = scanFacturas;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xoginger.scanFacturas;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8A0100000000000000000121 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ScanFacturas/ScanFacturas.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ScanFacturas/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = scanFacturas;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xoginger.scanFacturas;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		8A0100000000000000000122 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ShareToScanFacturas/ShareToScanFacturas.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ShareToScanFacturas/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xoginger.scanFacturas.ShareToScanFacturas;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8A0100000000000000000123 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ShareToScanFacturas/ShareToScanFacturas.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ShareToScanFacturas/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xoginger.scanFacturas.ShareToScanFacturas;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8A0100000000000000000119 /* Build configuration list for PBXProject "ScanFacturas" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A0100000000000000000124 /* Debug */,
+				8A0100000000000000000125 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8A0100000000000000000117 /* Build configuration list for PBXNativeTarget "ScanFacturas" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A0100000000000000000120 /* Debug */,
+				8A0100000000000000000121 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8A0100000000000000000118 /* Build configuration list for PBXNativeTarget "ShareToScanFacturas" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A0100000000000000000122 /* Debug */,
+				8A0100000000000000000123 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8A0100000000000000000100 /* Project object */;
+}

@@ -1,20 +1,25 @@
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
 const path = require('path');
+const storage = require('./storageService');
 
 /**
  * Servicio de generación de PDFs
  */
 class PDFService {
     /**
-     * Genera un reporte PDF de gastos por evento
+     * Genera un reporte PDF de gastos por ruta/viaje.
+     * No es un CFDI: el XML+PDF fiscal vive en Facturas/, no aquí.
      */
     async generateEventReport(event, expenses, categories) {
         return new Promise((resolve, reject) => {
             try {
                 const doc = new PDFDocument({ margin: 50, size: 'LETTER' });
-                const fileName = `reporte_${event.name.replace(/\s+/g, '_')}_${Date.now()}.pdf`;
-                const filePath = path.join(__dirname, '../uploads', fileName);
+                const slug = storage.slugFromRuta(event);
+                const fileName = `reporte_${slug}_${Date.now()}.pdf`;
+                const outDir = path.join(storage.dataRoot(), 'Reportes');
+                fs.mkdirSync(outDir, { recursive: true });
+                const filePath = path.join(outDir, fileName);
                 const stream = fs.createWriteStream(filePath);
 
                 doc.pipe(stream);
@@ -37,7 +42,7 @@ class PDFService {
                 doc.end();
 
                 stream.on('finish', () => {
-                    resolve(fileName);
+                    resolve({ fileName, relativePath: `Reportes/${fileName}` });
                 });
 
                 stream.on('error', reject);
