@@ -41,6 +41,9 @@ class OCRService {
             date: null,
             merchant: null,
             rfc: null,
+            folio: null,
+            ticket_id: null,
+            urls: [],
             billingData: {}
         };
 
@@ -93,6 +96,19 @@ class OCRService {
         const rfcMatch = text.match(rfcPattern);
         if (rfcMatch) {
             data.rfc = rfcMatch[1];
+        }
+
+        const urlPattern = /https?:\/\/[^\s<>"']+/gi;
+        data.urls = [...new Set((text.match(urlPattern) || []))];
+
+        const folioMatch = text.match(/folio[:\s#]*([A-Z0-9\-]{4,})/i);
+        if (folioMatch) {
+            data.folio = folioMatch[1];
+        }
+
+        const ticketIdMatch = text.match(/(?:no\.?\s*ticket|num(?:ero)?(?:\s+de)?\s+ticket|ticket)[:\s#]*([A-Z0-9\-]{4,})/i);
+        if (ticketIdMatch) {
+            data.ticket_id = ticketIdMatch[1];
         }
 
         // Extraer nombre del comercio (primeras líneas antes de dirección)
@@ -154,15 +170,32 @@ class OCRService {
     }
 
     /**
+     * Estructura el texto (Vision en iOS o Tesseract de fallback).
+     */
+    processVisionText(text) {
+        const data = this.parseTicketData(text);
+        return {
+            ...data,
+            rawText: text,
+            source: 'vision'
+        };
+    }
+
+    /**
      * Proceso completo: extraer texto y parsear datos
      */
-    async processTicket(imagePath) {
+    async processTicket(imagePath, visionText) {
+        if (visionText && String(visionText).trim()) {
+            return this.processVisionText(visionText);
+        }
+
         const text = await this.extractText(imagePath);
         const data = this.parseTicketData(text);
 
         return {
             ...data,
-            rawText: text
+            rawText: text,
+            source: 'tesseract'
         };
     }
 }
