@@ -112,7 +112,9 @@ router.post('/process-ticket', upload.single('image'), async (req, res) => {
         });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Error al procesar ticket' });
+        const msg = error.message || 'Error al procesar ticket';
+        const bad = /pequeña|ilegible|Solo se permiten|Se requiere imagen/i.test(msg);
+        res.status(bad ? 400 : 500).json({ error: msg });
     }
 });
 

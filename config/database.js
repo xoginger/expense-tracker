@@ -38,6 +38,10 @@ function initializeDatabase(db) {
     addColumnIfMissing(db, 'events', 'destination', 'TEXT');
     addColumnIfMissing(db, 'events', 'slug', 'TEXT');
     addColumnIfMissing(db, 'events', 'notes', 'TEXT');
+    addColumnIfMissing(db, 'events', 'agent_id', 'TEXT');
+    addColumnIfMissing(db, 'events', 'agent_name', 'TEXT');
+    addColumnIfMissing(db, 'events', 'cliente', 'TEXT');
+    addColumnIfMissing(db, 'events', 'zona', 'TEXT');
 
     db.exec(`
     CREATE TABLE IF NOT EXISTS categories (

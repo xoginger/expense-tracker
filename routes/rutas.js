@@ -2,10 +2,15 @@ const express = require('express');
 const router = express.Router();
 const db = require('../config/database');
 const rutas = require('../lib/rutas');
+const { agentIdFrom, teamScope, canSeeRuta } = require('../middleware/teamAuth');
 
 router.get('/', (req, res) => {
     try {
-        res.json(rutas.listRutas(db));
+        const opts = {};
+        if (!teamScope(req) && agentIdFrom(req)) {
+            opts.agent_id = agentIdFrom(req);
+        }
+        res.json(rutas.listRutas(db, opts));
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Error al obtener rutas' });
@@ -15,7 +20,7 @@ router.get('/', (req, res) => {
 router.get('/:id/totals', (req, res) => {
     try {
         const ruta = rutas.getRuta(db, req.params.id);
-        if (!ruta) {
+        if (!ruta || !canSeeRuta(req, ruta)) {
             return res.status(404).json({ error: 'Ruta no encontrada' });
         }
 
@@ -59,7 +64,7 @@ router.get('/:id/totals', (req, res) => {
 router.get('/:id/report', async (req, res) => {
     try {
         const ruta = rutas.getRuta(db, req.params.id);
-        if (!ruta) {
+        if (!ruta || !canSeeRuta(req, ruta)) {
             return res.status(404).json({ error: 'Ruta no encontrada' });
         }
 
@@ -84,7 +89,7 @@ router.get('/:id/report', async (req, res) => {
 router.get('/:id', (req, res) => {
     try {
         const ruta = rutas.getRuta(db, req.params.id);
-        if (!ruta) {
+        if (!ruta || !canSeeRuta(req, ruta)) {
             return res.status(404).json({ error: 'Ruta no encontrada' });
         }
 
@@ -105,7 +110,11 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
     try {
-        const created = rutas.createRuta(db, req.body);
+        const body = { ...req.body };
+        if (!body.agent_id && agentIdFrom(req)) {
+            body.agent_id = agentIdFrom(req);
+        }
+        const created = rutas.createRuta(db, body);
         res.status(201).json(created);
     } catch (error) {
         console.error(error);
@@ -115,6 +124,10 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
     try {
+        const current = rutas.getRuta(db, req.params.id);
+        if (!current || !canSeeRuta(req, current)) {
+            return res.status(404).json({ error: 'Ruta no encontrada' });
+        }
         const updated = rutas.updateRuta(db, req.params.id, req.body);
         if (!updated) {
             return res.status(404).json({ error: 'Ruta no encontrada' });
@@ -128,6 +141,10 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
     try {
+        const current = rutas.getRuta(db, req.params.id);
+        if (!current || !canSeeRuta(req, current)) {
+            return res.status(404).json({ error: 'Ruta no encontrada' });
+        }
         const result = db.prepare('DELETE FROM events WHERE id = ?').run(req.params.id);
         if (result.changes === 0) {
             return res.status(404).json({ error: 'Ruta no encontrada' });

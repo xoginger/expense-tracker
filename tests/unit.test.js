@@ -99,6 +99,8 @@ test('parseCfdiXml lee UUID y RFCs', () => {
 
 test('buildSlug desde origen-destino', () => {
     assert.equal(rutas.buildSlug({ origin: 'GDL', destination: 'PUE' }), 'GDL-PUE');
+    assert.equal(rutas.buildSlug({ origin: 'GDL', destination: 'LEON', cliente: 'Dist Bajio' }), 'GDL-LEON_DIST-BAJIO');
+    assert.equal(storage.slugFromRuta({ slug: 'GDL-LEON_DIST-BAJIO' }), 'GDL-LEON_DIST-BAJIO');
     assert.equal(rutas.normalizeStatus('active'), 'abierta');
     assert.equal(rutas.normalizeStatus('closed'), 'cerrada');
 });

@@ -218,3 +218,80 @@ test('API MVP: rutas, vision ticket, dictamen, CFDI, totales', async (t) => {
     assert.equal(detail.body.expenses.length, 1);
     assert.equal(detail.body.expenses[0].merchant, 'OXXO Sucursal Reforma');
 });
+
+test('process-ticket rechaza imagen ilegible sin tumbar el proceso', async (t) => {
+    const { server, base } = await listen();
+    t.after(() => new Promise((resolve) => server.close(resolve)));
+
+    const form = new FormData();
+    form.append('image', new Blob([PNG], { type: 'image/png' }), 'tiny.png');
+    const processed = await json(await fetch(`${base}/api/expenses/process-ticket`, {
+        method: 'POST',
+        body: form
+    }));
+    assert.equal(processed.status, 400);
+    assert.match(processed.body.error, /pequeña|ilegible/i);
+
+    const health = await json(await fetch(`${base}/api/health`));
+    assert.equal(health.status, 200);
+});
+
+test('API equipo: agent_id filtra salidas; team=1 ve todas', async (t) => {
+    const { server, base } = await listen();
+    t.after(() => new Promise((resolve) => server.close(resolve)));
+
+    const a = await json(await fetch(`${base}/api/rutas`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            origin: 'GDL',
+            destination: 'LEON',
+            start_date: '2026-09-21',
+            cliente: 'Dist Bajio',
+            agent_id: '12',
+            agent_name: 'Ana'
+        })
+    }));
+    assert.equal(a.status, 201);
+    assert.equal(a.body.slug, 'GDL-LEON_DIST-BAJIO');
+    assert.equal(a.body.agent_id, '12');
+    assert.equal(a.body.cliente, 'Dist Bajio');
+
+    const b = await json(await fetch(`${base}/api/rutas`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Agent-Id': '99' },
+        body: JSON.stringify({
+            origin: 'GDL',
+            destination: 'PUE',
+            start_date: '2026-09-22',
+            agent_name: 'Luis'
+        })
+    }));
+    assert.equal(b.status, 201);
+    assert.equal(b.body.agent_id, '99');
+
+    const mine = await json(await fetch(`${base}/api/rutas?agent_id=12`));
+    assert.equal(mine.body.length, 1);
+    assert.equal(mine.body[0].id, a.body.id);
+
+    const headerMine = await json(await fetch(`${base}/api/rutas`, {
+        headers: { 'X-Agent-Id': '99' }
+    }));
+    assert.equal(headerMine.body.length, 1);
+    assert.equal(headerMine.body[0].id, b.body.id);
+
+    const team = await json(await fetch(`${base}/api/rutas?team=1`, {
+        headers: { 'X-Agent-Id': '12' }
+    }));
+    assert.ok(team.body.length >= 2);
+
+    const hidden = await json(await fetch(`${base}/api/rutas/${b.body.id}`, {
+        headers: { 'X-Agent-Id': '12' }
+    }));
+    assert.equal(hidden.status, 404);
+
+    const totals = await json(await fetch(`${base}/api/totals?agent_id=12`));
+    assert.equal(totals.status, 200);
+    assert.equal(totals.body.by_ruta.length, 1);
+    assert.equal(totals.body.by_ruta[0].ruta_id, a.body.id);
+});

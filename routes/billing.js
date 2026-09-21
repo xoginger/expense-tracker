@@ -297,11 +297,11 @@ router.post('/dictamen', (req, res) => {
 
 router.get('/jobs', (req, res) => {
     try {
-        const { estado, ruta_id, event_id } = req.query;
+        const { estado, ruta_id, event_id, agent_id } = req.query;
         const tripId = ruta_id || event_id;
         let query = `
       SELECT j.*, e.merchant, e.amount, e.expense_date, e.ticket_code, e.event_id as ruta_id,
-             ev.slug as ruta_slug
+             ev.slug as ruta_slug, ev.agent_id, ev.agent_name
       FROM invoice_jobs j
       JOIN expenses e ON j.expense_id = e.id
       LEFT JOIN events ev ON e.event_id = ev.id
@@ -315,6 +315,10 @@ router.get('/jobs', (req, res) => {
         if (tripId) {
             query += ' AND e.event_id = ?';
             params.push(tripId);
+        }
+        if (agent_id) {
+            query += ' AND ev.agent_id = ?';
+            params.push(agent_id);
         }
         query += ' ORDER BY j.created_at DESC';
         const jobs = db.prepare(query).all(...params).map((job) => ({
