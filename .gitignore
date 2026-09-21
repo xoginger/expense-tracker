@@ -12,5 +12,6 @@ data/scanFacturas/_incoming/
 *.sqlite
 *.log
 .DS_Store
+*.traineddata
 .xcuserstate
 xcuserdata/
