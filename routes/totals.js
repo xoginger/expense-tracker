@@ -4,19 +4,28 @@ const db = require('../config/database');
 
 router.get('/', (req, res) => {
     try {
-        const { ruta_id, event_id } = req.query;
+        const { ruta_id, event_id, agent_id } = req.query;
         const tripId = ruta_id || event_id;
 
         let byRutaQuery = `
       SELECT ev.id as ruta_id, ev.slug, ev.name, ev.origin, ev.destination,
+             ev.agent_id, ev.agent_name,
              COUNT(e.id) as count, COALESCE(SUM(e.amount), 0) as total
       FROM events ev
       LEFT JOIN expenses e ON e.event_id = ev.id
     `;
         const rutaParams = [];
+        const rutaWhere = [];
         if (tripId) {
-            byRutaQuery += ' WHERE ev.id = ?';
+            rutaWhere.push('ev.id = ?');
             rutaParams.push(tripId);
+        }
+        if (agent_id) {
+            rutaWhere.push('ev.agent_id = ?');
+            rutaParams.push(agent_id);
+        }
+        if (rutaWhere.length) {
+            byRutaQuery += ' WHERE ' + rutaWhere.join(' AND ');
         }
         byRutaQuery += ' GROUP BY ev.id ORDER BY total DESC';
 
@@ -30,6 +39,9 @@ router.get('/', (req, res) => {
         if (tripId) {
             byCategoryQuery += ' AND e.event_id = ?';
             catParams.push(tripId);
+        } else if (agent_id) {
+            byCategoryQuery += ' AND e.event_id IN (SELECT id FROM events WHERE agent_id = ?)';
+            catParams.push(agent_id);
         }
         byCategoryQuery += ' GROUP BY c.id ORDER BY total DESC';
 

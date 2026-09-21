@@ -13,7 +13,7 @@ function sanitizeSlug(value) {
     const cleaned = String(value || '')
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '')
-        .replace(/[^A-Za-z0-9]+/g, '-')
+        .replace(/[^A-Za-z0-9_]+/g, '-')
         .replace(/^-+|-+$/g, '')
         .toUpperCase();
     return cleaned || 'RUTA';
@@ -24,7 +24,11 @@ function slugFromRuta(ruta = {}) {
         return sanitizeSlug(ruta.slug);
     }
     if (ruta.origin && ruta.destination) {
-        return `${sanitizeSlug(ruta.origin)}-${sanitizeSlug(ruta.destination)}`;
+        let slug = `${sanitizeSlug(ruta.origin)}-${sanitizeSlug(ruta.destination)}`;
+        if (ruta.cliente) {
+            slug += `_${sanitizeSlug(ruta.cliente)}`;
+        }
+        return slug;
     }
     return sanitizeSlug(ruta.name);
 }

@@ -1,5 +1,6 @@
 const Tesseract = require('tesseract.js');
 const path = require('path');
+const sharp = require('sharp');
 
 /**
  * Servicio de OCR para extraer datos de tickets
@@ -11,6 +12,14 @@ class OCRService {
     async extractText(imagePath) {
         try {
             console.log(`📸 Procesando imagen: ${imagePath}`);
+            const ext = path.extname(imagePath || '').toLowerCase();
+            if (ext !== '.pdf') {
+                const meta = await sharp(imagePath).metadata();
+                if (!meta.width || !meta.height || meta.width < 16 || meta.height < 16) {
+                    throw new Error('Imagen demasiado pequeña o ilegible para OCR');
+                }
+                await sharp(imagePath).rotate().png().toBuffer();
+            }
 
             const { data: { text } } = await Tesseract.recognize(
                 imagePath,
@@ -28,7 +37,7 @@ class OCRService {
             return text;
         } catch (error) {
             console.error('❌ Error en OCR:', error);
-            throw new Error('No se pudo procesar la imagen');
+            throw new Error(error.message || 'No se pudo procesar la imagen');
         }
     }
 

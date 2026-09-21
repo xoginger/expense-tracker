@@ -40,7 +40,9 @@ API en `http://localhost:3000`.
 - `GET /api/billing/invoices`
 - `GET /api/billing/guided-fields` — RFC/CP/régimen/email listos para pegar
 
-**Totales:** `GET /api/totals?ruta_id=`
+**Totales:** `GET /api/totals?ruta_id=` · `GET /api/totals?agent_id=`
+
+**Equipo (Vixor):** cada salida (`events`) puede llevar `agent_id` / `agent_name` / `cliente` / `zona`. `GET /api/rutas?agent_id=` filtra “mis salidas”; `X-Team-Scope: 1` (o `?team=1`) lista el equipo. Si `EXPENSE_API_TOKEN` está definido, hay que mandarlo en `X-Expense-Token` o `Authorization: Bearer`. El MVP iOS personal no lo necesita.
 
 Carpetas (espejo del iPhone):
 

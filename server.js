@@ -4,6 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 const storage = require('./services/storageService');
+const { tokenMiddleware } = require('./middleware/teamAuth');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -13,7 +14,7 @@ app.use(express.json({ limit: '12mb' }));
 app.use(express.urlencoded({ extended: true }));
 
 fs.mkdirSync(storage.dataRoot(), { recursive: true });
-app.use('/files', express.static(storage.dataRoot()));
+app.use('/files', tokenMiddleware, express.static(storage.dataRoot()));
 
 const publicDir = path.join(__dirname, 'public');
 if (fs.existsSync(publicDir)) {
@@ -23,6 +24,8 @@ if (fs.existsSync(publicDir)) {
 app.get('/api/health', (req, res) => {
     res.json({ ok: true, name: 'scanFacturas' });
 });
+
+app.use('/api', tokenMiddleware);
 
 app.use('/api/rutas', require('./routes/rutas'));
 app.use('/api/events', require('./routes/events'));
